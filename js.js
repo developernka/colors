@@ -1,3 +1,5 @@
+var h = window.innerHeight;
+var n = 3;
 var colorSorted = {};
 var htm = '';
 colors.shades.forEach(color => {
@@ -10,7 +12,19 @@ for (var k in colorSorted) {
   var color = colorSorted[k];
   htm += `<tr style='background:rgb(${color.shadeR},${color.shadeG},${color.shadeB});'><td>${color.shadeCode}</td><td>${color.shadeName}</td><td>(${color.shadeR},${color.shadeG},${color.shadeB})</td></tr>`;
 }
-document.getElementById('main').innerHTML = htm;
+
+$('#list>table').html(htm);
+
 $('tr').click(function() {
-  $('body').attr('style', $(this).attr('style'));
+  //$('body').attr('style', $(this).attr('style'));
+  $('#view>table').append(`
+  <tr class="color" style="${$(this).attr(
+    'style'
+  )}height:${h / n - 2}px;">${$(this).html()}</tr>
+  `);
+  $('.color').click(function() {
+    $(this).remove();
+  });
 });
+
+$('#list,#view').css({ height: h + 'px' });
